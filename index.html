@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refresca tu vida 🧋 — Bubble tea (demo)</title>
+<meta name="description" content="Bubble tea Refresca tu vida. Leche clásica, tiger, frutales y matcha. Pide por WhatsApp. Demo frontend sin backend.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --menta:#E9FBF2; --tinta:#371A4D; --muted:#6B5A7A; --linea:#CDEEDF;
+  --frambuesa:#E8336B; --frambuesa-osc:#A91D4E; --maracuya:#FFB300; --amarillo:#FFC700;
+  --card:#fff; --radio:22px; --sombra:6px 6px 0 #371A4D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--menta);color:var(--tinta);font-family:Nunito,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,.display{font-family:"Baloo 2",Nunito,sans-serif;line-height:1.05}
+.demo-bar{background:var(--tinta);color:var(--amarillo);text-align:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px;font-weight:800}
+header{position:sticky;top:0;z-index:60;background:rgba(233,251,242,.96);backdrop-filter:blur(6px);border-bottom:3px solid var(--tinta)}
+.bar{max-width:1180px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--tinta)}
+.sello{width:48px;height:48px;border-radius:50%;background:var(--maracuya);border:3px solid var(--tinta);display:grid;place-items:center;font-size:26px;box-shadow:3px 3px 0 var(--tinta)}
+.brand b{font-family:"Baloo 2";font-size:22px;display:block;line-height:1}
+.brand small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--frambuesa-osc);font-weight:800}
+nav.desk{display:flex;gap:18px}
+nav.desk a{color:var(--tinta);text-decoration:none;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.08em;border-bottom:3px solid transparent}
+nav.desk a:hover{border-color:var(--frambuesa)}
+.btn{display:inline-block;background:var(--tinta);color:#fff;border:3px solid var(--tinta);border-radius:999px;padding:13px 26px;font-weight:800;text-transform:uppercase;font-size:14px;cursor:pointer;text-decoration:none;box-shadow:4px 4px 0 rgba(55,26,77,.2);font-family:Nunito}
+.btn:hover{transform:translate(-1px,-1px)}
+.btn:active{transform:translate(2px,2px);box-shadow:none}
+.btn-amarillo{background:var(--amarillo);color:var(--tinta)}
+.btn-frambuesa{background:var(--frambuesa-osc);color:#fff;border-color:var(--tinta)}
+.btn-whats{background:#0B7A4B;border-color:#053d26;color:#fff}
+.btn-line{background:#fff;color:var(--tinta)}
+.burger{display:none;width:48px;height:48px;border-radius:14px;border:3px solid var(--tinta);background:#fff;font-size:20px;cursor:pointer;font-weight:800;color:var(--tinta)}
+.mobile-menu{display:none;padding:4px 18px 14px;background:var(--menta)}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:12px 2px;border-bottom:2px dashed var(--linea);text-decoration:none;color:var(--tinta);font-weight:800;text-transform:uppercase;font-size:14px}
+/* HERO */
+.hero{max-width:1180px;margin:0 auto;padding:26px 18px 10px;display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--tinta);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;box-shadow:4px 4px 0 var(--tinta)}
+.badge .dot{width:10px;height:10px;border-radius:50%;background:#0B7A4B;display:inline-block}
+.hero h1{font-size:clamp(42px,6vw,70px);margin-top:14px;font-weight:800}
+.hero h1 .fucsia{color:var(--frambuesa)}
+.hero h1 .pill{display:inline-block;background:var(--tinta);color:var(--amarillo);padding:2px 14px;border-radius:14px;transform:rotate(-1.5deg);font-size:.52em}
+.hero p{color:var(--muted);margin-top:12px;max-width:52ch;font-size:17px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.mini{font-size:13px;color:var(--muted);margin-top:10px}
+.mini a{color:var(--tinta);font-weight:800}
+.hero-media{position:relative}
+.marco{background:#fff;border:4px solid var(--tinta);border-radius:120px 120px 26px 26px;overflow:hidden;box-shadow:8px 8px 0 var(--tinta)}
+.marco img{display:block;width:100%;height:430px;object-fit:cover}
+.burbuja{position:absolute;border-radius:50%;background:rgba(232,51,107,.18);border:2px solid rgba(55,26,77,.35)}
+.b1{width:56px;height:56px;top:6%;left:-16px;animation:flota 5s ease-in-out infinite}
+.b2{width:34px;height:34px;top:38%;left:-34px;animation:flota 6s ease-in-out infinite reverse}
+.b3{width:44px;height:44px;bottom:12%;right:-14px;background:rgba(255,179,0,.25);animation:flota 7s ease-in-out infinite}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@media(prefers-reduced-motion:reduce){.burbuja,.marquee span{animation:none}}
+.sticker{position:absolute;font-family:"Baloo 2";font-weight:700;padding:10px 16px;border-radius:999px;border:3px solid var(--tinta);box-shadow:4px 4px 0 var(--tinta);font-size:15px}
+.st1{top:-14px;right:8px;background:var(--amarillo);transform:rotate(6deg)}
+.st2{bottom:20px;left:-10px;background:#fff;transform:rotate(-4deg);font-size:13px}
+/* marquee */
+.marquee{background:var(--tinta);color:var(--amarillo);overflow:hidden;white-space:nowrap;padding:12px 0;margin-top:20px;border-top:3px solid var(--tinta);border-bottom:3px solid var(--tinta);font-family:"Baloo 2";font-size:18px}
+.marquee span{display:inline-block;padding:0 18px;animation:mover 20s linear infinite}
+@keyframes mover{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* promo */
+.promo{background:var(--tinta);color:var(--amarillo);text-align:center;padding:18px 16px;border-bottom:3px solid var(--tinta)}
+.promo b{font-family:"Baloo 2";font-size:clamp(20px,3.4vw,30px);display:block}
+.promo code{background:var(--amarillo);color:var(--tinta);border-radius:10px;padding:2px 12px;font-family:"Baloo 2"}
+.promo small{display:block;color:#fff;font-size:13px;font-weight:700;margin-top:4px}
+/* secciones */
+section.bloque{max-width:1180px;margin:0 auto;padding:52px 18px}
+.k2{display:inline-block;font-weight:800;font-size:12px;letter-spacing:.22em;text-transform:uppercase;background:var(--amarillo);border:3px solid var(--tinta);border-radius:999px;padding:6px 14px;box-shadow:3px 3px 0 var(--tinta)}
+h2.t{font-size:clamp(32px,4.6vw,50px);margin-top:12px}
+.sub{color:var(--muted);margin-top:6px}
+.cats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.cats button{background:#fff;border:3px solid var(--tinta);border-radius:999px;padding:9px 18px;font-weight:800;text-transform:uppercase;font-size:13px;cursor:pointer;font-family:Nunito;box-shadow:3px 3px 0 var(--tinta);color:var(--tinta)}
+.cats button.activo{background:var(--tinta);color:var(--amarillo)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.card{background:var(--card);border:3px solid var(--tinta);border-radius:var(--radio);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sombra)}
+.card img{width:100%;aspect-ratio:4/3;object-fit:cover;border-bottom:3px solid var(--tinta)}
+.pad{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pad b{font-family:"Baloo 2";font-size:19px}
+.pad small{color:var(--muted);font-size:13px}
+.fila{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px}
+.precio{font-family:"Baloo 2";font-weight:700;font-size:22px}
+.tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;background:var(--menta);border:2px solid var(--tinta);border-radius:999px;padding:3px 10px;align-self:flex-start}
+.opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.opts label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.opts select{width:100%;border:2px solid var(--tinta);border-radius:10px;padding:7px;font-family:inherit;font-size:13px;background:#fff;color:var(--tinta);margin-top:2px}
+.add{background:var(--tinta);color:#fff;border:0;border-radius:999px;padding:10px 18px;font-weight:800;cursor:pointer;text-transform:uppercase;font-size:12px;font-family:Nunito}
+.add:hover{background:#000}
+/* arma tu vaso */
+.custom{background:#fff;border:3px solid var(--tinta);border-radius:24px;box-shadow:var(--sombra);margin-top:18px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+.vaso-css{width:130px;height:190px;margin:0 auto;border:4px solid var(--tinta);border-radius:18px 18px 60px 60px;background:linear-gradient(to top,#E8336B 22%,#FFB300 22%,#FFB300 45%,#fff 45%);position:relative;box-shadow:5px 5px 0 var(--tinta)}
+.vaso-css::after{content:"🧋";position:absolute;inset:0;display:grid;place-items:center;font-size:44px}
+.custom label{font-size:12px;font-weight:800;text-transform:uppercase;display:block;margin-top:10px}
+.custom select{width:100%;border:3px solid var(--tinta);border-radius:12px;padding:10px;font-family:inherit;margin-top:4px;background:#fff;color:var(--tinta)}
+/* seguir + opiniones */
+.panel{background:#fff;border:3px solid var(--tinta);border-radius:20px;padding:18px;box-shadow:var(--sombra);margin-top:16px;max-width:560px}
+.panel label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.panel input{width:100%;border:3px solid var(--tinta);border-radius:12px;padding:12px;font-size:16px;font-family:inherit;margin-top:6px}
+.opis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.opi{background:#fff;border:3px solid var(--tinta);border-radius:18px;padding:16px;box-shadow:5px 5px 0 var(--tinta)}
+.opi b{color:var(--frambuesa-osc)}
+.hours{background:var(--tinta);color:#fff;text-align:center;padding:20px}
+.hours strong{color:var(--amarillo);font-family:"Baloo 2";font-size:20px}
+footer{max-width:1180px;margin:0 auto;padding:34px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+footer h3{font-size:13px;text-transform:uppercase;letter-spacing:.15em;margin-bottom:6px}
+footer a{color:var(--tinta);font-weight:800}
+.legal{max-width:1180px;margin:0 auto;padding:0 18px 30px;color:var(--muted);font-size:12px}
+/* carrito */
+.flotante{position:fixed;right:16px;bottom:16px;z-index:70}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,94vw);background:#fff;border-left:4px solid var(--tinta);z-index:80;padding:18px;overflow:auto;transform:translateX(105%);transition:.28s}
+.drawer.open{transform:none}
+.linea{padding:10px 0;border-bottom:2px dashed var(--linea);font-size:14px}
+.linea .top{display:flex;justify-content:space-between;gap:8px;font-weight:800}
+.linea small{color:var(--muted)}
+.qty button{width:30px;height:30px;border-radius:10px;border:3px solid var(--tinta);background:var(--amarillo);font-weight:800;cursor:pointer;color:var(--tinta)}
+.cupon{display:flex;gap:8px;margin-top:12px}
+.cupon input{flex:1;border:3px solid var(--tinta);border-radius:12px;padding:10px;font-family:inherit;text-transform:uppercase}
+.totales{margin:12px 0;font-size:15px}
+.totales .row{display:flex;justify-content:space-between;padding:3px 0}
+.totales .grand{font-family:"Baloo 2";font-size:24px;border-top:3px solid var(--tinta);margin-top:6px;padding-top:6px}
+form.ped input,form.ped select{width:100%;border:3px solid var(--tinta);border-radius:12px;padding:11px;margin-top:6px;font-family:inherit}
+form.ped label{font-size:12px;font-weight:800;text-transform:uppercase;margin-top:10px;display:block}
+.msg{background:#FFF7DB;border:3px solid var(--tinta);border-radius:12px;padding:10px;margin-top:10px;font-size:14px}
+.msg.ok{background:#DFF7E8}
+:focus-visible{outline:4px solid var(--frambuesa);outline-offset:2px}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .marco img{height:300px}
+  .grid{grid-template-columns:1fr 1fr}
+  .opis{grid-template-columns:1fr}
+  .custom{grid-template-columns:1fr}
+  nav.desk{display:none}.burger{display:block}
+  footer{grid-template-columns:1fr}
+}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.opts{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="demo-bar">Demo sin backend — precios y datos de ejemplo</div>
+<header><div class="bar">
+<a class="brand" href="#top"><span class="sello">🧋</span><span><b>Refresca tu vida</b><small>Bubble tea · ejemplo</small></span></a>
+<nav class="desk"><a href="#menu">Bebidas</a><a href="#armatu">Arma tu vaso</a><a href="#seguir">Seguir pedido</a><a href="#contacto">Contacto</a></nav>
+<div style="display:flex;gap:8px;align-items:center"><a class="btn btn-amarillo" href="#menu" style="padding:10px 20px">Pedir</a><button class="burger" id="burger" aria-expanded="false" aria-label="Abrir menú">☰</button></div>
+</div><nav class="mobile-menu" id="mm"><a href="#menu">Bebidas</a><a href="#armatu">Arma tu vaso</a><a href="#seguir">Seguir pedido</a><a href="#contacto">Contacto</a><a href="admin.html">Admin</a></nav></header>
+
+<section class="hero" id="top">
+<div>
+<span class="badge"><span class="dot"></span> Hecho al momento · ejemplo</span>
+<h1>Refresca <span class="fucsia">tu vida</span> <span class="pill">sorbo a sorbo</span></h1>
+<p>Perlas suaves, fruta real y té de verdad. Arma tu vaso en 1 minuto y mándalo por WhatsApp. Y los lunes, 10% con tu cupón.</p>
+<div class="cta-row"><a class="btn btn-frambuesa" href="#menu">Quiero mi boba 👇</a><a class="btn btn-line" href="#armatu">Armar mi vaso</a></div>
+<p class="mini">Sin pago real · <a href="admin.html">Abrir admin demo (clave refresca123)</a></p>
+</div>
+<div class="hero-media">
+<div class="burbuja b1"></div><div class="burbuja b2"></div><div class="burbuja b3"></div>
+<div class="marco"><img src="assets/hero-clasico.jpg" alt="Bubble tea de azúcar morena con perlas de tapioca" fetchpriority="high"></div>
+<div class="sticker st1">Lunes −10% 🎟️</div>
+<div class="sticker st2">⭐ 4.9 · ejemplo</div>
+</div>
+</section>
+
+<div class="marquee" aria-hidden="true"><span>TAPIOCA • TIGER • MATCHA • FRESA • CASSIS • MANGO • TAPIOCA • TIGER • MATCHA • FRESA • CASSIS • MANGO •&nbsp;</span><span>TAPIOCA • TIGER • MATCHA • FRESA • CASSIS • MANGO • TAPIOCA • TIGER • MATCHA • FRESA • CASSIS • MANGO •&nbsp;</span></div>
+<div class="promo"><b id="promoTxt">Lunes con 10% — cupón LUNES10</b><small id="promoSub">Se gestiona en el admin. Aplica solo los lunes.</small></div>
+
+<section class="bloque" id="menu">
+<span class="k2">Menú de ejemplo</span>
+<h2 class="t">Elige tu antojo</h2>
+<p class="sub">Fotos Pixabay descargadas · Precios MXN inventados. Personaliza azúcar, hielo y topping.</p>
+<div class="cats" id="cats"></div>
+<div class="grid" id="grid"></div>
+</section>
+
+<section class="bloque" id="armatu" style="padding-top:0">
+<span class="k2">A tu gusto</span>
+<h2 class="t">Arma tu vaso</h2>
+<p class="sub">Elige base y personalízalo. Precio base de ejemplo.</p>
+<div class="custom">
+<div><div class="vaso-css" aria-hidden="true"></div><p class="sub" style="text-align:center;margin-top:10px">Tu mezcla, tus reglas 🧋</p></div>
+<div>
+<label for="baseSel">Base</label>
+<select id="baseSel"></select>
+<label for="azSel">Azúcar</label>
+<select id="azSel"><option>100%</option><option>70%</option><option>50%</option><option>30%</option><option>0%</option></select>
+<label for="hiSel">Hielo</label>
+<select id="hiSel"><option>Normal</option><option>Extra</option><option>Sin hielo</option></select>
+<label for="topSel">Topping</label>
+<select id="topSel"></select>
+<div style="margin-top:12px"><button class="add" id="addCustom">Agregar mi vaso +</button></div>
+</div>
+</div>
+</section>
+
+<section class="bloque" id="seguir" style="padding-top:0">
+<span class="k2">Demo</span>
+<h2 class="t">Sigue tu pedido</h2>
+<div class="panel"><label for="code">Código (ej. REF-1234)</label><input id="code" maxlength="12" placeholder="REF-XXXX"><div style="margin-top:10px"><button class="btn" id="btnSeg">Consultar</button></div><div class="msg" id="msgSeg" hidden></div></div>
+</section>
+
+<section class="bloque" id="opiniones" style="padding-top:0">
+<span class="k2">La banda opina</span>
+<h2 class="t">Dicen por ahí (ejemplo)</h2>
+<div class="opis">
+<div class="opi"><b>★★★★★</b><p>"El tiger con queso es otro nivel. Pido por WhatsApp y paso por él."</p><small>— Vale, ejemplo</small></div>
+<div class="opi"><b>★★★★★</b><p>"El cupón de lunes sí aplica. Mi matcha salió más barato."</p><small>— Diego, ejemplo</small></div>
+<div class="opi"><b>★★★★★</b><p>"Perlas suavecitas, nada chiclosas. Mi lugar de la tarde."</p><small>— Fer, ejemplo</small></div>
+</div>
+</section>
+
+<div class="hours">Lun–Dom · <strong>11:00 – 21:00</strong> · <span style="font-size:13px">Horario de ejemplo · Lunes −10% con cupón</span></div>
+<footer id="contacto">
+<div><h3>📍 Dirección (ejemplo)</h3><p>Calle Fresca 456, Ciudad Ejemplo<br><a href="https://maps.google.com/?q=Calle+Fresca+456" target="_blank" rel="noopener">Cómo llegar</a></p></div>
+<div><h3>💬 Contacto (ejemplo)</h3><p>WhatsApp <a href="#" id="waLink">+52 000 000 0000</a><br>Lun–Dom 11:00–21:00</p></div>
+<div><h3>🧋 Refresca tu vida</h3><p class="sub">Fotos: Pixabay (sam651030, knd61, viarami). Material descargado, sin hotlinks.<br><a href="admin.html">Admin demo</a> · Frontend sin backend, listo para API.</p></div>
+</footer>
+<p class="legal">Precios, dirección y opiniones inventados para demo. El cupón de lunes es de ejemplo y se valida por fecha.</p>
+
+<button class="btn flotante" id="openCart">🧋 Vasos (<span id="nCart">0</span>)</button>
+<aside class="drawer" id="drawer" aria-label="Carrito">
+<h2 class="display">Tu pedido</h2><p class="sub">Demo sin pago.</p>
+<div id="lines"></div>
+<div class="cupon"><input id="cuponIn" placeholder="Cupón (ej. LUNES10)" maxlength="20"><button class="btn" id="cuponBtn" style="padding:10px 16px">Aplicar</button></div>
+<div class="msg" id="msgCupon" hidden></div>
+<div class="totales"><div class="row"><span>Subtotal</span><span id="subT">$0</span></div><div class="row" id="descRow" hidden><span>Descuento <span id="descLbl"></span></span><span id="descT">−$0</span></div><div class="row grand"><span>Total</span><span id="total">$0</span></div></div>
+<form class="ped" id="formPed"><label>Nombre</label><input id="nombre" required maxlength="40" placeholder="Ej. Vale"><label>Entrega</label><select id="tipo"><option>Recoger</option><option>Domicilio (ejemplo)</option></select><label>Nota</label><input id="nota" maxlength="80" placeholder="Opcional"><button class="btn btn-amarillo" type="submit" style="width:100%;margin-top:12px">Guardar pedido</button></form>
+<button class="btn btn-whats" id="waSend" style="width:100%;margin-top:8px">Enviar por WhatsApp</button>
+<button class="btn btn-line" id="vaciar" style="width:100%;margin-top:8px">Vaciar</button>
+<div class="msg" id="msgPed" hidden></div>
+</aside>
+
+<script src="js/api.js"></script>
+<script>
+(function(){
+  var api = window.RefrescaApi;
+  var menu = api.getMenu(), cfg = api.getCfg(), cart = api.getCart();
+  var DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  document.getElementById("waLink").href = "https://wa.me/" + cfg.wa;
+  function coupon(){ return api.getCoupon(); }
+  function cuponValido(code){
+    var c = coupon();
+    if(!c.activo) return {ok:false, msg:"Cupón desactivado (ver admin)."};
+    if((code||"").trim().toUpperCase() !== (c.code||"").toUpperCase()) return {ok:false, msg:"Cupón no reconocido."};
+    if(c.onlyMonday && !api.esLunes()) return {ok:false, msg:"El cupón " + c.code + " solo aplica los lunes. Hoy es " + DIAS[new Date().getDay()] + "."};
+    return {ok:true, pct:c.pct};
+  }
+  // barra promo
+  (function promo(){ var c = coupon();
+    document.getElementById("promoTxt").innerHTML = (c.activo ? ("Lunes con −" + c.pct + "% — cupón ") : "Cupón desactivado: ") + "<code>" + c.code + "</code>";
+    document.getElementById("promoSub").textContent = c.activo ? ("Aplica " + (c.onlyMonday ? "solo los lunes" : "todos los días") + ". Hoy es " + DIAS[new Date().getDay()] + ".") : "Actívalo en el admin.";
+  })();
+  var catAct = "Todo";
+  function cats(){ var c=["Todo"]; menu.forEach(function(p){ if(c.indexOf(p.cat)<0) c.push(p.cat); }); return c; }
+  function topOptions(sel){ sel.innerHTML=""; api.toppings.forEach(function(t){ var o=document.createElement("option"); o.value=t.id; o.textContent=t.nombre+(t.precio?(" +$"+t.precio):""); sel.appendChild(o); }); }
+  function pintarCats(){ var w=document.getElementById("cats"); w.innerHTML=""; cats().forEach(function(c){ var b=document.createElement("button"); b.textContent=c; if(c===catAct) b.classList.add("activo"); b.onclick=function(){ catAct=c; pintarCats(); pintarMenu(); }; w.appendChild(b); }); }
+  function pintarMenu(){ var g=document.getElementById("grid"); g.innerHTML=""; menu.filter(function(p){ return catAct==="Todo"||p.cat===catAct; }).forEach(function(p){ var d=document.createElement("div"); d.className="card";
+    d.innerHTML="<img loading='lazy'><div class='pad'><span class='tag'></span><b></b><small></small><div class='opts'><div><label>Azúcar</label><select class='az'><option>100%</option><option>70%</option><option>50%</option><option>30%</option><option>0%</option></select></div><div><label>Hielo</label><select class='hi'><option>Normal</option><option>Extra</option><option>Sin hielo</option></select></div><div><label>Topping</label><select class='top'></select></div></div><div class='fila'><span class='precio'></span></div></div>";
+    d.querySelector("img").src=p.img; d.querySelector("img").alt=p.nombre; d.querySelector(".tag").textContent=p.cat; d.querySelector("b").textContent=p.nombre; d.querySelector("small").textContent=p.desc; d.querySelector(".precio").textContent="$"+p.precio;
+    topOptions(d.querySelector(".top"));
+    var b=document.createElement("button"); b.className="add"; b.textContent="Agregar +";
+    b.onclick=function(){ var t=api.toppings.find(function(x){return x.id===d.querySelector(".top").value;});
+      cart.push({id:p.id,nombre:p.nombre,base:+p.precio,az:d.querySelector(".az").value,hi:d.querySelector(".hi").value,top:t.nombre,topP:+t.precio,unit:+p.precio + +t.precio});
+      api.saveCart(cart); pintarCart(); };
+    d.querySelector(".fila").appendChild(b); g.appendChild(d); }); }
+  // arma tu vaso
+  var bases=[{n:"Leche clásica",p:55},{n:"Tiger brown sugar",p:65},{n:"Taro (ejemplo)",p:65},{n:"Matcha",p:68},{n:"Fruta de temporada",p:60}];
+  (function(){ var s=document.getElementById("baseSel"); bases.forEach(function(b){ var o=document.createElement("option"); o.value=b.n+"|"+b.p; o.textContent=b.n+" — $"+b.p; s.appendChild(o); }); topOptions(document.getElementById("topSel")); })();
+  document.getElementById("addCustom").onclick=function(){ var bp=document.getElementById("baseSel").value.split("|"); var t=api.toppings.find(function(x){return x.id===document.getElementById("topSel").value;});
+    cart.push({id:"custom",nombre:"Vaso armado ("+bp[0]+")",base:+bp[1],az:document.getElementById("azSel").value,hi:document.getElementById("hiSel").value,top:t.nombre,topP:+t.precio,unit:+bp[1]+ +t.precio});
+    api.saveCart(cart); pintarCart(); document.getElementById("openCart").scrollIntoView(); };
+  function subtotal(){ return cart.reduce(function(s,it){return s+it.unit;},0); }
+  function descuento(){ var code=(document.getElementById("cuponIn").value||"").trim(); if(!code) return {monto:0,ok:false}; var v=cuponValido(code); if(!v.ok) return {monto:0,ok:false,msg:v.msg}; return {monto:Math.round(subtotal()*v.pct/100),ok:true,pct:v.pct,code:code.toUpperCase()}; }
+  function pintarCart(){ document.getElementById("nCart").textContent=cart.length;
+    var w=document.getElementById("lines"); w.innerHTML= cart.length? "" : "<p class='sub'>Vacío. Agrega tu primer boba 🧋</p>";
+    cart.forEach(function(it,i){ var d=document.createElement("div"); d.className="linea";
+      d.innerHTML="<div class='top'><span></span></div><small></small>";
+      d.querySelector("span").textContent=it.nombre+" — $"+it.unit;
+      d.querySelector("small").textContent=it.az+" azúcar · "+it.hi+(it.top!=="Sin extra"?(" · "+it.top):"");
+      var q=document.createElement("button"); q.textContent="Quitar"; q.style.cssText="margin-top:6px;border:2px solid var(--tinta);background:#fff;border-radius:8px;padding:4px 10px;font-weight:800;cursor:pointer;font-size:12px";
+      q.onclick=function(){ cart.splice(i,1); api.saveCart(cart); pintarCart(); }; d.appendChild(q); w.appendChild(d); });
+    var d=descuento(), sub=subtotal();
+    document.getElementById("subT").textContent="$"+sub;
+    document.getElementById("descRow").hidden=!d.ok;
+    if(d.ok){ document.getElementById("descLbl").textContent="("+d.code+" −"+d.pct+"%)"; document.getElementById("descT").textContent="−$"+d.monto; }
+    document.getElementById("total").textContent="$"+(sub-d.monto); }
+  document.getElementById("cuponBtn").onclick=function(){ var m=document.getElementById("msgCupon"); m.hidden=false; m.classList.remove("ok");
+    var code=(document.getElementById("cuponIn").value||"").trim(); if(!code){ m.textContent="Escribe tu cupón. El de ejemplo es LUNES10."; pintarCart(); return; }
+    var v=cuponValido(code); m.textContent=v.ok?("Cupón "+code.toUpperCase()+" aplicado: −"+v.pct+"%."):(v.msg); if(v.ok)m.classList.add("ok"); pintarCart(); };
+  var dr=document.getElementById("drawer"); document.getElementById("openCart").onclick=function(){ dr.classList.toggle("open"); };
+  document.getElementById("vaciar").onclick=function(){ cart=[]; api.saveCart(cart); pintarCart(); };
+  document.getElementById("formPed").addEventListener("submit",function(e){ e.preventDefault(); var m=document.getElementById("msgPed"); m.hidden=false; m.classList.remove("ok");
+    if(!cart.length){ m.textContent="Tu vaso está vacío: agrega una bebida primero."; return; }
+    var d=descuento(), sub=subtotal(), tot=sub-d.monto;
+    var code="REF-"+Math.floor(1000+Math.random()*9000);
+    var os=api.getOrders(); os.push({code:code,fecha:new Date().toISOString(),nombre:document.getElementById("nombre").value,tipo:document.getElementById("tipo").value,nota:document.getElementById("nota").value,items:cart.slice(),sub:sub,desc:d.monto,cupon:d.ok?d.code:"",total:tot,estado:"pendiente"});
+    api.saveOrders(os); m.classList.add("ok"); m.textContent="Pedido "+code+" guardado por $"+tot+". Ahora envíalo por WhatsApp.";
+    cart=[]; api.saveCart(cart); pintarCart(); e.target.reset(); });
+  document.getElementById("waSend").onclick=function(){ var os=api.getOrders(); var last=os[os.length-1]; var mm=document.getElementById("msgPed");
+    var items=cart.length?cart:(last?last.items:[]); if(!items.length){ mm.hidden=false; mm.textContent="Sin pedido: agrega bebidas o guarda primero."; return; }
+    var sub=items.reduce(function(s,it){return s+it.unit;},0);
+    var code=(document.getElementById("cuponIn").value||"").trim(), desc=0, dl="";
+    if(code){ var v=cuponValido(code); if(v.ok){ desc=Math.round(sub*v.pct/100); dl=" (cupón "+code.toUpperCase()+" −"+v.pct+"%)"; } }
+    var txt="Hola Refresca tu vida (demo), quiero pedir:%0A"+items.map(function(it){return "- "+encodeURIComponent(it.nombre+" ("+it.az+", "+it.hi+(it.top!=="Sin extra"?", "+it.top:"")+")");}).join("%0A")+"%0ASubtotal $"+sub+dl+(desc?("%0ADescuento −$"+desc):"")+"%0ATotal $"+(sub-desc)+" (ejemplo)";
+    window.open("https://wa.me/"+api.getCfg().wa+"?text="+txt,"_blank"); };
+  document.getElementById("btnSeg").onclick=function(){ var c=document.getElementById("code").value.trim().toUpperCase(), m=document.getElementById("msgSeg"); m.hidden=false;
+    var o=api.getOrders().find(function(x){return x.code===c;}); m.textContent=o?("Pedido "+o.code+": "+o.estado+" · $"+o.total+(o.cupon?(" · cupón "+o.cupon):"")):"Código no encontrado en este navegador (demo local)."; };
+  var b=document.getElementById("burger"), mm=document.getElementById("mm"); b.onclick=function(){ var o=mm.classList.toggle("open"); b.setAttribute("aria-expanded",o); };
+  try{ var saved=localStorage.getItem("refresca-applied"); if(saved) document.getElementById("cuponIn").value=saved; }catch(e){}
+  document.getElementById("cuponIn").addEventListener("change",function(){ try{localStorage.setItem("refresca-applied",this.value);}catch(e){} });
+  pintarCats(); pintarMenu(); pintarCart();
+  window.addEventListener("storage",function(){ menu=api.getMenu(); pintarMenu(); });
+})();
+</script>
+</body>
+</html>

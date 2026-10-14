@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Refresca tu vida (demo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--menta:#E9FBF2;--tinta:#371A4D;--muted:#6B5A7A;--linea:#CDEEDF;--amarillo:#FFC700}
+*{box-sizing:border-box;margin:0;padding:0}body{background:var(--menta);color:var(--tinta);font-family:Nunito,system-ui,sans-serif;line-height:1.6}
+h1,h2{font-family:"Baloo 2"} .demo-bar{background:#371A4D;color:var(--amarillo);text-align:center;font-size:12px;padding:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+.wrap{max-width:1080px;margin:0 auto;padding:26px 18px 60px}a{color:var(--tinta);font-weight:800}h1{font-size:clamp(32px,4.5vw,48px)}
+.login{background:#fff;border:3px solid var(--tinta);border-radius:16px;padding:18px;max-width:430px;margin-top:14px;box-shadow:6px 6px 0 var(--tinta)}.login input{width:100%;border:3px solid var(--tinta);border-radius:12px;padding:12px;margin-top:8px;font-size:16px}
+.btn{background:var(--tinta);color:#fff;border:3px solid var(--tinta);border-radius:999px;padding:11px 22px;font-weight:800;cursor:pointer;text-transform:uppercase;font-size:13px;margin-top:10px}.btn-ghost{background:#fff;color:var(--tinta)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.kpi{background:#fff;border:3px solid var(--tinta);border-radius:14px;padding:12px;box-shadow:4px 4px 0 var(--tinta)}.kpi b{font-size:28px;display:block;font-family:"Baloo 2"}
+table{width:100%;border-collapse:collapse;background:#fff;border:3px solid var(--tinta);font-size:14px}th,td{padding:10px;border-bottom:2px solid var(--linea);text-align:left}th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;background:var(--amarillo)}
+.card{background:#fff;border:3px solid var(--tinta);border-radius:14px;padding:14px;margin-top:10px;box-shadow:4px 4px 0 var(--tinta)}.card input,.card select{width:100%;border:3px solid var(--tinta);border-radius:10px;padding:9px;margin-top:6px;font-size:15px}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.filt{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.filt button{background:#fff;border:3px solid var(--tinta);border-radius:999px;padding:7px 14px;font-weight:800;cursor:pointer;font-size:12px;color:var(--tinta)}.filt button.on{background:var(--tinta);color:var(--amarillo)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}select.estado{border:2px solid var(--tinta);border-radius:8px;padding:6px}
+.chk{display:flex;gap:8px;align-items:center;margin-top:8px}.chk input{width:auto}
+@media(max-width:760px){.kpis{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="demo-bar">Admin demo — sin backend · ejemplo</div>
+<main class="wrap"><a href="index.html">← Volver a la tienda</a><h1>Panel Refresca tu vida 🧋</h1><p style="color:var(--muted)">Bebidas + pedidos + cupón de lunes. Clave demo: <b>refresca123</b>.</p>
+<div id="gate" class="login"><label><b>Clave</b></label><input id="clave" type="password" placeholder="refresca123" autocomplete="current-password"><button class="btn" id="entrar">Entrar</button><p id="msgGate"></p></div>
+<div id="app" hidden>
+<div class="kpis"><div class="kpi"><small>Pedidos</small><b id="kPed">0</b></div><div class="kpi"><small>Ingresos ej.</small><b id="kIng">$0</b></div><div class="kpi"><small>Ticket</small><b id="kTick">$0</b></div><div class="kpi"><small>Bebidas</small><b id="kProd">0</b></div></div>
+<h2>Pedidos (WhatsApp + local)</h2><div class="filt" id="filt"></div>
+<div style="overflow-x:auto"><table><thead><tr><th>Código</th><th>Cliente</th><th>Ítems</th><th>Total</th><th>Estado</th><th></th></tr></thead><tbody id="tPed"></tbody></table></div>
+<h2 style="margin-top:18px">Bebidas</h2><div class="grid2" id="plist"></div>
+<div class="card"><h3>Nueva / editar</h3><input type="hidden" id="pId"><label>Nombre<input id="pNom" placeholder="Ej. Taro nube"></label><label>Categoría<input id="pCat" placeholder="Clásicos / Frutales / Especiales"></label><label>Descripción<input id="pDesc" placeholder="Ej. Taro, leche y perlas"></label><label>Precio MXN<input id="pPre" type="number" min="1" placeholder="65"></label><div class="row"><button class="btn" id="saveP">Guardar</button><button class="btn btn-ghost" id="clearP">Limpiar</button></div><p style="font-size:12px;color:var(--muted)">La foto se mantiene (demo). Al conectar backend aquí subirás imagen.</p></div>
+<h2 style="margin-top:18px">Cupón de lunes</h2><div class="card"><label>Código<input id="cCode" maxlength="20" placeholder="LUNES10"></label><label>Descuento %<input id="cPct" type="number" min="1" max="90" placeholder="10"></label><label class="chk"><input type="checkbox" id="cMon"> Solo válido los lunes</label><label class="chk"><input type="checkbox" id="cAct"> Cupón activo</label><div class="row"><button class="btn" id="saveC">Guardar cupón</button></div></div>
+<h2 style="margin-top:18px">Ajustes</h2><div class="card"><label>WhatsApp (solo dígitos)<input id="sWa"></label><label>Clave admin<input id="sClave"></label><div class="row"><button class="btn" id="saveS">Guardar</button><button class="btn btn-ghost" id="wipe">Borrar pedidos</button><button class="btn btn-ghost" id="salir">Salir</button></div><p id="msg"></p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">Para backend futuro: cambia <code>js/api.js</code> por <code>fetch("https://tu-api/...")</code>. Tienda y panel no cambian.</p></div>
+</div></main>
+<script src="js/api.js"></script>
+<script>
+(function(){var api=window.RefrescaApi;var filtro="todos";
+document.getElementById("entrar").onclick=function(){var c=api.getCfg();if(document.getElementById("clave").value===c.clave){try{localStorage.setItem(api.keys.auth,"true");}catch(e){}show();}else{document.getElementById("msgGate").textContent="Clave incorrecta.";}};
+function show(){document.getElementById("gate").hidden=true;document.getElementById("app").hidden=false;pintar();}
+try{if(localStorage.getItem(api.keys.auth)==="true")show();}catch(e){}
+document.getElementById("salir").onclick=function(){try{localStorage.removeItem(api.keys.auth);}catch(e){}location.reload();};
+function pintar(){var os=api.getOrders(),menu=api.getMenu(),cfg=api.getCfg(),cp=api.getCoupon();
+var ing=os.reduce(function(a,o){return a+(+o.total||0);},0);
+document.getElementById("kPed").textContent=os.length;document.getElementById("kIng").textContent="$"+ing;document.getElementById("kTick").textContent="$"+(os.length?Math.round(ing/os.length):0);document.getElementById("kProd").textContent=menu.length;
+var fs=["todos","pendiente","preparación","listo","entregado","cancelado"],fw=document.getElementById("filt");fw.innerHTML="";fs.forEach(function(f){var b=document.createElement("button");b.textContent=f;if(f===filtro)b.classList.add("on");b.onclick=function(){filtro=f;pintar();};fw.appendChild(b);});
+var tb=document.getElementById("tPed");tb.innerHTML=os.length?"":'<tr><td colspan="6">Sin pedidos. Envía uno desde la tienda.</td></tr>';
+os.slice().reverse().forEach(function(o){if(filtro!=="todos"&&o.estado!==filtro)return;var tr=document.createElement("tr");tr.innerHTML="<td><b></b><br><small></small></td><td></td><td></td><td></td><td></td><td></td>";tr.children[0].querySelector("b").textContent=o.code;tr.children[0].querySelector("small").textContent=(o.fecha||"").slice(0,16).replace("T"," ");tr.children[1].textContent=(o.nombre||"")+" · "+(o.tipo||"");tr.children[2].textContent=(o.items||[]).map(function(i){return i.nombre||i.id;}).join(" · ");tr.children[3].textContent="$"+o.total+(o.cupon?(" ("+o.cupon+")"):"");var s=document.createElement("select");s.className="estado";["pendiente","preparación","listo","entregado","cancelado"].forEach(function(e){var op=document.createElement("option");op.value=e;op.textContent=e;if(o.estado===e)op.selected=true;s.appendChild(op);});s.onchange=function(){var all=api.getOrders();var ix=all.findIndex(function(x){return x.code===o.code;});if(ix>-1){all[ix].estado=s.value;api.saveOrders(all);}pintar();};tr.children[4].appendChild(s);var d=document.createElement("button");d.textContent="Borrar";d.onclick=function(){api.saveOrders(api.getOrders().filter(function(x){return x.code!==o.code;}));pintar();};tr.children[5].appendChild(d);tb.appendChild(tr);});
+var pl=document.getElementById("plist");pl.innerHTML="";menu.forEach(function(p){var d=document.createElement("div");d.className="card";d.innerHTML="<b></b><p></p><div class='row'></div>";d.querySelector("b").textContent=p.nombre+" — $"+p.precio;d.querySelector("p").textContent=p.cat+" · "+p.desc;var e=document.createElement("button");e.className="btn";e.textContent="Editar";e.onclick=function(){document.getElementById("pId").value=p.id;document.getElementById("pNom").value=p.nombre;document.getElementById("pCat").value=p.cat;document.getElementById("pDesc").value=p.desc;document.getElementById("pPre").value=p.precio;};var del=document.createElement("button");del.className="btn btn-ghost";del.textContent="Eliminar";del.onclick=function(){if(confirm("¿Eliminar "+p.nombre+"?")){api.saveMenu(api.getMenu().filter(function(x){return x.id!==p.id;}));pintar();}};var r=d.querySelector(".row");r.appendChild(e);r.appendChild(del);pl.appendChild(d);});
+document.getElementById("cCode").value=cp.code||"";document.getElementById("cPct").value=cp.pct||10;document.getElementById("cMon").checked=!!cp.onlyMonday;document.getElementById("cAct").checked=!!cp.activo;
+document.getElementById("sWa").value=cfg.wa||"";document.getElementById("sClave").value=cfg.clave||"";
+}
+document.getElementById("saveP").onclick=function(){var all=api.getMenu();var id=document.getElementById("pId").value||("p"+Date.now());var o={id:id,nombre:document.getElementById("pNom").value||"Boba",cat:document.getElementById("pCat").value||"Clásicos",desc:document.getElementById("pDesc").value||"Editado en admin",precio:+document.getElementById("pPre").value||0,img:"assets/boba-limon.jpg"};var ix=all.findIndex(function(x){return x.id===id;});if(ix>-1){o.img=all[ix].img;all[ix]=Object.assign(all[ix],o);}else{all.push(o);}api.saveMenu(all);pintar();document.getElementById("msg").textContent="Bebida guardada.";};
+document.getElementById("clearP").onclick=function(){["pId","pNom","pCat","pDesc","pPre"].forEach(function(i){document.getElementById(i).value="";});};
+document.getElementById("saveC").onclick=function(){api.saveCoupon({code:(document.getElementById("cCode").value||"LUNES10").toUpperCase(),pct:+document.getElementById("cPct").value||10,onlyMonday:document.getElementById("cMon").checked,activo:document.getElementById("cAct").checked});document.getElementById("msg").textContent="Cupón guardado.";pintar();};
+document.getElementById("saveS").onclick=function(){var c=api.getCfg();c.wa=document.getElementById("sWa").value.replace(/\D/g,"");c.clave=document.getElementById("sClave").value||"refresca123";api.saveCfg(c);document.getElementById("msg").textContent="Ajustes guardados.";};
+document.getElementById("wipe").onclick=function(){if(confirm("¿Borrar todos los pedidos demo?")){api.saveOrders([]);pintar();}};
+})();
+</script>
+</body>
+</html>
