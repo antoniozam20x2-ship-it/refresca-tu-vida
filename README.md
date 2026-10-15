@@ -3,7 +3,7 @@
 Demo fresca y juvenil. Todo ejemplo. Sin pago real.
 
 ## Ver local
-- `node server.js` → http://localhost:8081
+- Sitio 100% estático. Prueba con `npx serve` o la extensión Live Server → abre `index.html`
 - Tienda: `/index.html` · Admin: `/admin.html` (clave demo `refresca123`)
 
 ## Cupón de lunes
